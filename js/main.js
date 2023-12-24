@@ -1,6 +1,14 @@
 const mockArray = {};
 const commentsId = new Set;
 const photosColection = new Set;
+const idColection = new Set;
+
+const minMaxComents = [0, 10];
+const minMaxId = [1, 500];
+const minMaxAvatar = [1, 6];
+const minMaxPhotosOrComents = [1, 25];
+const minMaxLikes = [15, 200];
+
 const names = [
     'Анна', 'Богдан', 'Василь', 'Галина', 'Дмитро',
     'Євгенія', 'Жанна', 'Зеновій', 'Ігор', 'Йосип',
@@ -36,37 +44,90 @@ const photoDescriptions = [
     'Жвава атмосфера кібер-бару з великою кількістю мерехтливих неонових вогників.'
   ];
   
-
+const photoComments = [
+    'Ця фотографія вражає своєю кібернетичною атмосферою.',
+    'Справжній майстер кіберпанку зафіксував цей момент.',
+    'Що за футуристичний світ! Просто захоплююче.',
+    'Здається, майбутнє вже зараз. Дивовижно!',
+    'Цей кадр викликає відчуття власного поглиблення в кіберреальність.',
+    'Кожна фотографія - це як погляд у вікно іншого світу.',
+    'Зачаровуюче поєднання технології та арт-стилю.',
+    'Фантастичні деталі і вражаюча гра світла.',
+    'Якесь містичне поєднання майбутнього та технології.',
+    'Хто б міг подумати, що світ кіберпанку може бути настільки красивим!',
+    'Ця фотографія - справжнє технічне диво.',
+    'Холодний відтінок кіберміста залишає незабутнє враження.',
+    'Колірне гама та композиція - на вищому рівні.',
+    'Ці кадри переносять у світ кібернетичних фантазій.',
+    'Відмінна глибина та вражаюча динаміка в кожному кадрі.',
+    'Тут втілена ідеальна гра світла та тіні.',
+    'Кіберпанк виглядає так, ніби він завжди існував.',
+    'Не забути про деталі - це те, що робить ці фотографії виразними.',
+    'Кожен кадр - це маленька кіберпанк історія.',
+    'Фотограф вдало захопив дух кіберпанку в цих знімках.',
+    'Інтригуючий космічний аспект у цих кіберпанк образах.',
+    'Щось в цих фотографіях заставляє задуматися про майбутнє.',
+    'Кожен елемент цих фото розкриває якийсь новий куток кіберпростору.',
+    'Це не просто фотографії, а справжнє поглиблення у кіберреальність.',
+    'Такий стиль кіберпанку заворожує і не дає відпустити погляд.'
+  ];
+  
 function mockArrayFiller () {
-    const min = 1;
     const max = 25;
-    const minLikes = 15;
-    const maxLikes = 200;
     for (let i = 0; i < max; i++) {
         mockArray[i] = {};
         mockArray[i].id = i + 1;
-        mockArray[i].url = `photos/${getRandomPhotos(min, max)}`;
+        mockArray[i].url = `photos/${getRandomPhotos(...minMaxPhotosOrComents)}`;
         mockArray[i].description = photoDescriptions[i];
-        mockArray[i].likes = getRandomNumber(minLikes, maxLikes);
+        mockArray[i].likes = getRandomNumber(...minMaxLikes);
+        mockArray[i].coments = getComentsArray();
     };
-}
+};
 
 function getRandomNumber (min, max) {
     return Math.floor(Math.random() * (max - min + 1) + min);
 };
 
 
-
 function getRandomPhotos (min, max) {
     let number = 0;
+    if (photosColection.size == max) {
+        return 'colection is full';
+    };
   do {
     number = getRandomNumber(min, max);
   } while (photosColection.has(number))
   photosColection.add(number);
   return number;
+};
+
+function getRandomId (min, max) {
+  let number = 0;
+  if (idColection.size == max) {
+      return 'colection is full';
+  };
+do {
+  number = getRandomNumber(min, max);
+} while (idColection.has(number))
+idColection.add(number);
+return number;
+};
+
+function getComentsArray () {
+  const comentsQuantity = getRandomNumber(...minMaxComents);
+  const comentArray = [];
+  for (let i = 0; i < comentsQuantity; i++) {
+    comentArray[i] = {};
+    comentArray[i].id = getRandomId(...minMaxId);
+    comentArray[i].avatar = `img/avatar-${getRandomNumber(...minMaxAvatar)}`;
+    comentArray[i].message = photoComments[getRandomNumber(0, photoComments.length)];
+    comentArray[i].name = names[getRandomNumber(0, names.length)];
+  };
+  return comentArray;
 }
 
+mockArrayFiller();
 
-mockArrayFiller()
 console.log(mockArray, 'mockArray');
-console.log(photosColection, 'photosColection')
+console.log(photosColection, 'photosColection');
+console.log(idColection, 'idColection');
