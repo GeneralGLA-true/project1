@@ -3,11 +3,13 @@ const commentsId = new Set;
 const photosColection = new Set;
 const idColection = new Set;
 
-const minMaxComents = [0, 10];
-const minMaxId = [1, 500];
-const minMaxAvatar = [1, 6];
-const minMaxPhotosOrComents = [1, 25];
-const minMaxLikes = [15, 200];
+const minMaxFor = {
+  coments: [0, 10],
+  id: [1, 500],
+  avatar: [1, 6],
+  photos: [1, 25],
+  likes: [15, 200],
+};
 
 const names = [
     'Анна', 'Богдан', 'Василь', 'Галина', 'Дмитро',
@@ -77,12 +79,12 @@ function mockArrayFiller () {
     for (let i = 0; i < max; i++) {
         mockArray[i] = {};
         mockArray[i].id = i + 1;
-        mockArray[i].url = `photos/${getRandomPhotos(...minMaxPhotosOrComents)}`;
+        mockArray[i].url = `photos/${getRandomPhotos(...minMaxFor.photos)}`;
         mockArray[i].description = photoDescriptions[i];
-        mockArray[i].likes = getRandomNumber(...minMaxLikes);
+        mockArray[i].likes = getRandomNumber(...minMaxFor.likes);
         mockArray[i].coments = getComentsArray();
     };
-};
+}; /////// gthtltkfnm
 
 function getRandomNumber (min, max) {
     return Math.floor(Math.random() * (max - min + 1) + min);
@@ -114,12 +116,13 @@ return number;
 };
 
 function getComentsArray () {
-  const comentsQuantity = getRandomNumber(...minMaxComents);
+  const comentsQuantity = getRandomNumber(...minMaxFor.coments);
   const comentArray = [];
+
   for (let i = 0; i < comentsQuantity; i++) {
     comentArray[i] = {};
-    comentArray[i].id = getRandomId(...minMaxId);
-    comentArray[i].avatar = `img/avatar-${getRandomNumber(...minMaxAvatar)}`;
+    comentArray[i].id = getRandomId(...minMaxFor.id);
+    comentArray[i].avatar = `img/avatar-${getRandomNumber(...minMaxFor.avatar)}`;
     comentArray[i].message = photoComments[getRandomNumber(0, photoComments.length)];
     comentArray[i].name = names[getRandomNumber(0, names.length)];
   };
