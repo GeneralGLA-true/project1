@@ -1,13 +1,16 @@
 const mockArray = {};
-const commentsId = new Set;
-const photosColection = new Set;
-const idColection = new Set;
-
-const minMaxComents = [0, 10];
-const minMaxId = [1, 500];
-const minMaxAvatar = [1, 6];
-const minMaxPhotosOrComents = [1, 25];
-const minMaxLikes = [15, 200];
+const colectionObjectFor = {
+  commentsId: new Set,
+  photosColection: new Set,
+  idColection: new Set,
+};
+const minMaxFor = {
+  coments: [0, 15],
+  id: [1, 500],
+  avatar: [1, 6],
+  photos: [1, 25],
+  likes: [15, 200],
+};
 
 const names = [
     'Анна', 'Богдан', 'Василь', 'Галина', 'Дмитро',
@@ -73,15 +76,16 @@ const photoComments = [
   ];
   
 function mockArrayFiller () {
-    const max = 25;
-    for (let i = 0; i < max; i++) {
-        mockArray[i] = {};
-        mockArray[i].id = i + 1;
-        mockArray[i].url = `photos/${getRandomPhotos(...minMaxPhotosOrComents)}`;
-        mockArray[i].description = photoDescriptions[i];
-        mockArray[i].likes = getRandomNumber(...minMaxLikes);
-        mockArray[i].coments = getComentsArray();
+  const max = 25;
+  for (let i = 0; i < max; i++) {
+    mockArray[i] = {
+      id: i + 1,
+      url: `photos/${getRandomPhotos(...minMaxFor.photos)}`,
+      deskription: photoDescriptions[i],
+      likes: getRandomNumber(...minMaxFor.likes),
+      coments: getComentsArray(),
     };
+  };
 };
 
 function getRandomNumber (min, max) {
@@ -91,37 +95,40 @@ function getRandomNumber (min, max) {
 
 function getRandomPhotos (min, max) {
     let number = 0;
-    if (photosColection.size == max) {
+    if (colectionObjectFor.photosColection.size == max) {
         return 'colection is full';
     };
   do {
     number = getRandomNumber(min, max);
-  } while (photosColection.has(number))
-  photosColection.add(number);
+  } while (colectionObjectFor.photosColection.has(number))
+  colectionObjectFor.photosColection.add(number);
   return number;
 };
 
 function getRandomId (min, max) {
   let number = 0;
-  if (idColection.size == max) {
+  if (colectionObjectFor.idColection.size == max) {
       return 'colection is full';
   };
 do {
   number = getRandomNumber(min, max);
-} while (idColection.has(number))
-idColection.add(number);
+} while (colectionObjectFor.idColection.has(number))
+colectionObjectFor.idColection.add(number);
 return number;
 };
 
 function getComentsArray () {
-  const comentsQuantity = getRandomNumber(...minMaxComents);
+  const comentsQuantity = getRandomNumber(...minMaxFor.coments);
   const comentArray = [];
+
   for (let i = 0; i < comentsQuantity; i++) {
-    comentArray[i] = {};
-    comentArray[i].id = getRandomId(...minMaxId);
-    comentArray[i].avatar = `img/avatar-${getRandomNumber(...minMaxAvatar)}`;
-    comentArray[i].message = photoComments[getRandomNumber(0, photoComments.length)];
-    comentArray[i].name = names[getRandomNumber(0, names.length)];
+    comentArray[i] = {
+      id: getRandomId(...minMaxFor.id),
+      avatar: `img/avatar-${getRandomNumber(...minMaxFor.avatar)}`,
+      massage: photoComments[getRandomNumber(0, photoComments.length)],
+      name: names[getRandomNumber(0, names.length)],
+    };
+
   };
   return comentArray;
 }
@@ -129,5 +136,7 @@ function getComentsArray () {
 mockArrayFiller();
 
 console.log(mockArray, 'mockArray');
-console.log(photosColection, 'photosColection');
-console.log(idColection, 'idColection');
+console.log(colectionObjectFor.photosColection, 'photosColection');
+console.log(colectionObjectFor.idColection, 'idColection');
+
+
