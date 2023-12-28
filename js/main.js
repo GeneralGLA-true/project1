@@ -1,4 +1,4 @@
-const mockArray = {};
+const mockArray = [];
 const commentsId = new Set;
 const photosColection = new Set;
 const idColection = new Set;
@@ -77,7 +77,7 @@ function mockArrayFiller () {
     for (let i = 0; i < max; i++) {
         mockArray[i] = {};
         mockArray[i].id = i + 1;
-        mockArray[i].url = `photos/${getRandomPhotos(...minMaxPhotosOrComents)}`;
+        mockArray[i].url = `photos/${getRandomPhotos(...minMaxPhotosOrComents)}.jpg`;
         mockArray[i].description = photoDescriptions[i];
         mockArray[i].likes = getRandomNumber(...minMaxLikes);
         mockArray[i].coments = getComentsArray();
