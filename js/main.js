@@ -127,7 +127,7 @@ function getComentsArray () {
 }
 
 mockArrayFiller();
-
+export {mockArray};
 console.log(mockArray, 'mockArray');
 console.log(photosColection, 'photosColection');
 console.log(idColection, 'idColection');
