@@ -24,8 +24,7 @@ function getSomeImage () {
     };
 };
 
-let someImage = getSomeImage()
-
+let someImage = getSomeImage();
 
 function getAllImages() {
     mockArray.map(function(e) {
@@ -38,3 +37,4 @@ function getAllImages() {
 
 //getAllImages()
 //someImage()
+
