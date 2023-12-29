@@ -13,7 +13,6 @@ function getSomeImage () {
     let count = 0;
     return function(quantity) {
         if(quantity){
-            alert(quantity)
             for (let i = 0; i < quantity; i++){
                 letPhoto(count);
                 count++;
