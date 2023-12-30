@@ -1,8 +1,4 @@
-<<<<<<< Updated upstream
-const mockArray = {};
-=======
 const mockArray = [];
->>>>>>> Stashed changes
 const colectionObjectFor = {
   commentsId: new Set,
   photosColection: new Set,
@@ -80,16 +76,6 @@ const photoComments = [
   ];
   
 function mockArrayFiller () {
-<<<<<<< Updated upstream
-  const max = 25;
-  for (let i = 0; i < max; i++) {
-    mockArray[i] = {
-      id: i + 1,
-      url: `photos/${getRandomPhotos(...minMaxFor.photos)}`,
-      deskription: photoDescriptions[i],
-      likes: getRandomNumber(...minMaxFor.likes),
-      coments: getComentsArray(),
-=======
     const max = 25;
     for (let i = 0; i < max; i++) {
         mockArray[i] = {};
@@ -98,7 +84,6 @@ function mockArrayFiller () {
         mockArray[i].description = photoDescriptions[i];
         mockArray[i].likes = getRandomNumber(...minMaxLikes);
         mockArray[i].coments = getComentsArray();
->>>>>>> Stashed changes
     };
   };
 };
