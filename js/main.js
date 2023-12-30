@@ -1,4 +1,4 @@
-const mockArray = {};
+const mockArray = [];
 const colectionObjectFor = {
   commentsId: new Set,
   photosColection: new Set,
@@ -76,14 +76,14 @@ const photoComments = [
   ];
   
 function mockArrayFiller () {
-  const max = 25;
-  for (let i = 0; i < max; i++) {
-    mockArray[i] = {
-      id: i + 1,
-      url: `photos/${getRandomPhotos(...minMaxFor.photos)}`,
-      deskription: photoDescriptions[i],
-      likes: getRandomNumber(...minMaxFor.likes),
-      coments: getComentsArray(),
+    const max = 25;
+    for (let i = 0; i < max; i++) {
+        mockArray[i] = {};
+        mockArray[i].id = i + 1;
+        mockArray[i].url = `photos/${getRandomPhotos(...minMaxFor.coments)}.jpg`;
+        mockArray[i].description = photoDescriptions[i];
+        mockArray[i].likes = getRandomNumber(...minMaxLikes);
+        mockArray[i].coments = getComentsArray();
     };
   };
 };
@@ -134,7 +134,7 @@ function getComentsArray () {
 }
 
 mockArrayFiller();
-
+export {mockArray};
 console.log(mockArray, 'mockArray');
 console.log(colectionObjectFor.photosColection, 'photosColection');
 console.log(colectionObjectFor.idColection, 'idColection');
