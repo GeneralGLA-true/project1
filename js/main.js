@@ -1,6 +1,5 @@
 const mockArray = [];
 const colectionObjectFor = {
-  commentsId: new Set,
   photosColection: new Set,
   idColection: new Set,
 };
