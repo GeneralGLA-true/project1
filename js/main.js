@@ -80,13 +80,12 @@ function mockArrayFiller () {
     for (let i = 0; i < max; i++) {
         mockArray[i] = {};
         mockArray[i].id = i + 1;
-        mockArray[i].url = `photos/${getRandomPhotos(...minMaxFor.coments)}.jpg`;
+        mockArray[i].url = `photos/${getRandomPhotos(...minMaxFor.photos)}.jpg`;
         mockArray[i].description = photoDescriptions[i];
-        mockArray[i].likes = getRandomNumber(...minMaxLikes);
+        mockArray[i].likes = getRandomNumber(...minMaxFor.likes);
         mockArray[i].coments = getComentsArray();
     };
   };
-};
 
 function getRandomNumber (min, max) {
     return Math.floor(Math.random() * (max - min + 1) + min);

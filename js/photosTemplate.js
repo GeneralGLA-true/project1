@@ -30,11 +30,13 @@ function getAllImages() {
     mockArray.map(function(e) {
         const cloneTemplateContent = template.content.cloneNode(true);
         const image = cloneTemplateContent.querySelector('img');
+        const comentsValue = cloneTemplateContent.querySelector('.picture__comments')
         image.src = `${e.url}`;
+        comentsValue.textContent = `${e.coments.length}`
         sectionForPhotos.appendChild(image);
     });
 };
 
-//getAllImages()
+getAllImages()
 //someImage()
 
