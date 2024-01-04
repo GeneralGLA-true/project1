@@ -1,40 +1,22 @@
 import {mockArray} from './main.js';
+
 const template = document.querySelector('#picture');
-const sectionForPhotos = document.querySelector('.pictures');
+const pictureContainer = document.createDocumentFragment();
+const container = document.querySelector('.pictures', '.container');
 
-function letPhoto (count){
-    const cloneTemplateContent = template.content.cloneNode(true);
-    const image = cloneTemplateContent.querySelector('img');
-    image.src = `${mockArray[count].url}`;
-    sectionForPhotos.appendChild(image);
-}
+function getPhotos (obj) {
+    const cloneTemplate = template.content.cloneNode(true);
+    const image = cloneTemplate.querySelector('.picture__img');
+    const comentsValue = cloneTemplate.querySelector('.picture__comments');
+    const likesValue = cloneTemplate.querySelector('.picture__likes');
 
-function getSomeImage () {
-    let count = 0;
-    return function(quantity) {
-        if(quantity){
-            for (let i = 0; i < quantity; i++){
-                letPhoto(count);
-                count++;
-            }
-            return;
-        }
-      letPhoto(count)  ;
-      return count++;
-    };
+    image.src = `${obj.url}`;
+    comentsValue.textContent = `${obj.coments.length}`;
+    likesValue.textContent = `${obj.likes}`;
+    pictureContainer.appendChild(cloneTemplate);
 };
 
-let someImage = getSomeImage();
+mockArray.map((e) => {getPhotos(e)});
+container.appendChild(pictureContainer);
 
-function getAllImages() {
-    mockArray.map(function(e) {
-        const cloneTemplateContent = template.content.cloneNode(true);
-        const image = cloneTemplateContent.querySelector('img');
-        image.src = `${e.url}`;
-        sectionForPhotos.appendChild(image);
-    });
-};
-
-//getAllImages()
-//someImage()
 
