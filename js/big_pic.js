@@ -1,6 +1,7 @@
 import {mockArray} from './main.js';
 
 const bigPic = document.querySelector('.big-picture__img');
+const image = bigPic.querySelector('img');
 const bigPicContainer = document.querySelector('.big-picture');
 const body = document.querySelector('body');
 const comentsContainer = document.querySelector('.social__comments');
@@ -8,64 +9,41 @@ const likesCount = bigPicContainer.querySelector('.likes-count');
 const comentsCount = bigPicContainer.querySelector('.comments-count');
 const comentsShown = bigPicContainer.querySelector('.comments-shown');
 const showncoments = 5;
+const description = bigPicContainer.querySelector('.social__caption');
+const fiveComentsTemplate = fiveComents();
 
-/* document.addEventListener('click', e => {
-    if(e.target.tagName == "IMG") {
-        const description = bigPicContainer.querySelector('.social__caption');
-        const fid = e.target.dataset.id;
-        const data = mockArray.find((e) => fid == e.id);
-        const showncoments = 5;
-        //console.log(data);
+let dataObject = new Object;
+let coment = new Array;
+let comentsTemplate = new String;
+let extraComentCount = showncoments + 5;
 
-        const comentsTemplate = data.coments.map((e) => getComentsTemplate(e));
-        //comentsContainer.innerHTML = comentsTemplate;
 
-        let fiveComentsTemplate = fiveComents() ;
-        let coment = fiveComentsTemplate(comentsTemplate);
-        comentsContainer.innerHTML = coment;
 
-        bigPic.children[0].src = data.url;
-        description.innerText = data.description;
-        likesCount.innerText = data.likes;
-        comentsCount.innerText = data.coments.length;
+function getBigPicture (e) {
+    const findID = e.target.dataset.id;
+    dataObject = mockArray.find((e) => findID == e.id);
+    comentsTemplate = dataObject.coments.map((e) => getComentsTemplate(e));
+    
 
-        if(showncoments > data.coments.length){
-            comentsShown.innerText = data.coments.length;
-        };  
+    description.innerText = dataObject.description;
+    image.src = dataObject.url;
+    likesCount.innerText = dataObject.likes;
+    comentsCount.innerText = dataObject.coments.length;
 
-        bigPicContainer.classList.remove('hidden');
-        body.classList.add('modal-open');
-
-        bigPicContainer.addEventListener('click' , e => {
-            if(e.target.id === 'picture-cancel') {
-                bigPicContainer.classList.add('hidden');
-                body.classList.remove('modal-open');
-            };
-            if(e.target.className === 'social__comments-loader  comments-loader'){
-                coment += fiveComentsTemplate(comentsTemplate);
-                let comCount = showncoments + 5;
-                comentsContainer.innerHTML = coment;
-                
-                if(comCount >= data.coments.length){
-                    comentsShown.innerText = data.coments.length;
-                } else {
-                    comentsShown.innerText = comCount;
-                };
-            };
-        });
+    if(showncoments > dataObject.coments.length){
+        comentsShown.innerText = dataObject.coments.length;
+    } else {
+        comentsShown.innerText = showncoments;
     };
-});
- */
 
-document.addEventListener('click', getBigPic);
+    coment = fiveComentsTemplate(comentsTemplate);
+    comentsContainer.innerHTML = coment;
 
-document.addEventListener('keydown', e => {
-    if (e.key === 'Escape'){
-        bigPicContainer.classList.add('hidden');
-        body.classList.remove('modal-open');
-        alert(e.key);
-    }
-});
+    console.log(comentsTemplate)
+    console.log(dataObject)
+    bigPicContainer.classList.remove('hidden');
+};
+
 
 function getComentsTemplate (obj){
     return `<li class="social__comment">
@@ -77,9 +55,9 @@ function getComentsTemplate (obj){
   </li>`
 };
 
-function fiveComents (){
+function fiveComents () {
     let i = 0
-    let max = i + 5;
+    let max = 5;
     return function (arr) {
         let fiveTemplate = '';
         if(max >= arr.length){
@@ -94,61 +72,30 @@ function fiveComents (){
 };
 
 
-
-
-function getBigPic (e) {
-    if(e.target.tagName == "IMG") {
-        const description = bigPicContainer.querySelector('.social__caption');
-        const fid = e.target.dataset.id;
-        const data = mockArray.find((e) => fid == e.id);
-        let count = showncoments + 5;
-        //console.log(data);
-
-        const comentsTemplate = data.coments.map((e) => getComentsTemplate(e));
-        //comentsContainer.innerHTML = comentsTemplate;
-
-        const fiveComentsTemplate = fiveComents() ;
-        let coment = fiveComentsTemplate(comentsTemplate);
+document.addEventListener('click', e => {
+    if (e.target.tagName == "IMG") {
+        getBigPicture(e)
+    };
+    if(e.target.id === 'picture-cancel') {
+        bigPicContainer.classList.add('hidden');
+        body.classList.remove('modal-open');
+    };
+    if(e.target.className === 'social__comments-loader  comments-loader'){
+        coment += fiveComentsTemplate(comentsTemplate);
         comentsContainer.innerHTML = coment;
 
-        bigPic.children[0].src = data.url;
-        description.innerText = data.description;
-        likesCount.innerText = data.likes;
-        comentsCount.innerText = data.coments.length;
-
-        if(showncoments > data.coments.length){
-            comentsShown.innerText = data.coments.length;
+        if(extraComentCount >= dataObject.coments.length){
+            comentsShown.innerText = dataObject.coments.length;
         } else {
-            comentsShown.innerText = showncoments;
+            comentsShown.innerText = extraComentCount;
         }
-
-        bigPicContainer.classList.remove('hidden');
-        body.classList.add('modal-open');
-
-
-        bigPicContainer.addEventListener('click' , e => {
-            if(e.target.id === 'picture-cancel') {
-                bigPicContainer.classList.add('hidden');
-                body.classList.remove('modal-open');
-             
-            };
-            if(e.target.className === 'social__comments-loader  comments-loader'){
-                coment += fiveComentsTemplate(comentsTemplate);
-                console.log(showncoments)
-                comentsContainer.innerHTML = coment;
-                console.log(data.coments.length)
-
-                if(count >= data.coments.length){
-                    comentsShown.innerText = data.coments.length;
-                } else {
-                    comentsShown.innerText = count;
-                }
-                count += 5;  
-            };
-        });
+        extraComentCount += 5;  
     };
-    
-    
-}
+});
 
-//document.removeEventListener('click', getBigPic)
+document.addEventListener('keydown', e => {
+    if (e.key === 'Escape') {
+        bigPicContainer.classList.add('hidden');
+        body.classList.remove('modal-open');
+    }
+});
