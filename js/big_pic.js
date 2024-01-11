@@ -10,12 +10,15 @@ const comentsCount = bigPicContainer.querySelector('.comments-count');
 const comentsShown = bigPicContainer.querySelector('.comments-shown');
 const showncoments = 5;
 const description = bigPicContainer.querySelector('.social__caption');
-const fiveComentsTemplate = fiveComents();
+const cancelBtn = document.querySelector('#picture-cancel')
 
+
+//////// тимчасові штуки
 let dataObject = new Object;
-let coment = new Array;
+let comentsArray = new Array;
 let comentsTemplate = new String;
 let extraComentCount = showncoments + 5;
+const fiveComentsTemplate = fiveComents();
 
 
 
@@ -24,7 +27,6 @@ function getBigPicture (e) {
     dataObject = mockArray.find((e) => findID == e.id);
     comentsTemplate = dataObject.coments.map((e) => getComentsTemplate(e));
     
-
     description.innerText = dataObject.description;
     image.src = dataObject.url;
     likesCount.innerText = dataObject.likes;
@@ -36,11 +38,12 @@ function getBigPicture (e) {
         comentsShown.innerText = showncoments;
     };
 
-    coment = fiveComentsTemplate(comentsTemplate);
-    comentsContainer.innerHTML = coment;
+    comentsArray = fiveComentsTemplate(comentsTemplate);
+    comentsContainer.innerHTML = comentsArray;
+    //comentsContainer.innerHTML = comentsTemplate;
 
-    console.log(comentsTemplate)
-    console.log(dataObject)
+    //console.log(comentsTemplate)
+    //console.log(dataObject)
     bigPicContainer.classList.remove('hidden');
 };
 
@@ -55,6 +58,8 @@ function getComentsTemplate (obj){
   </li>`
 };
 
+
+//////// замикання для показу +5 коментів
 function fiveComents () {
     let i = 0
     let max = 5;
@@ -74,15 +79,11 @@ function fiveComents () {
 
 document.addEventListener('click', e => {
     if (e.target.tagName == "IMG") {
-        getBigPicture(e)
-    };
-    if(e.target.id === 'picture-cancel') {
-        bigPicContainer.classList.add('hidden');
-        body.classList.remove('modal-open');
+        getBigPicture(e);
     };
     if(e.target.className === 'social__comments-loader  comments-loader'){
-        coment += fiveComentsTemplate(comentsTemplate);
-        comentsContainer.innerHTML = coment;
+        comentsArray += fiveComentsTemplate(comentsTemplate);
+        comentsContainer.innerHTML = comentsArray;
 
         if(extraComentCount >= dataObject.coments.length){
             comentsShown.innerText = dataObject.coments.length;
@@ -92,6 +93,12 @@ document.addEventListener('click', e => {
         extraComentCount += 5;  
     };
 });
+
+cancelBtn.addEventListener('click', e => {
+    bigPicContainer.classList.add('hidden');
+    body.classList.remove('modal-open');
+});
+
 
 document.addEventListener('keydown', e => {
     if (e.key === 'Escape') {
