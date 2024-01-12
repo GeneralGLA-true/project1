@@ -26,7 +26,6 @@ function getBigPicture (e) {
     bigPicContainer.classList.remove('hidden');
 };
 
-
 function getComentsTemplate (obj){
     return `<li class="social__comment">
     <img class="social__picture" src="${obj.avatar}" alt="Аватар на коментарі фотографії" width="35" height="35">
