@@ -4,11 +4,13 @@ const colectionObjectFor = {
   idColection: new Set,
 };
 const minMaxFor = {
-  coments: [0, 15],
+  coments: [0, 37],
   id: [1, 500],
   avatar: [1, 6],
   photos: [1, 25],
   likes: [15, 200],
+  comentsMessage: [0, 24],
+  names: [0, 24]
 };
 
 const names = [
@@ -122,9 +124,9 @@ function getComentsArray () {
   for (let i = 0; i < comentsQuantity; i++) {
     comentArray[i] = {
       id: getRandomId(...minMaxFor.id),
-      avatar: `img/avatar-${getRandomNumber(...minMaxFor.avatar)}`,
-      massage: photoComments[getRandomNumber(0, photoComments.length)],
-      name: names[getRandomNumber(0, names.length)],
+      avatar: `img/avatar-${getRandomNumber(...minMaxFor.avatar)}.svg`,
+      message: photoComments[getRandomNumber(...minMaxFor.comentsMessage)],
+      name: names[getRandomNumber(...minMaxFor.names)],
     };
 
   };
@@ -134,7 +136,5 @@ function getComentsArray () {
 mockArrayFiller();
 export {mockArray};
 console.log(mockArray, 'mockArray');
-console.log(colectionObjectFor.photosColection, 'photosColection');
-console.log(colectionObjectFor.idColection, 'idColection');
-
-
+//console.log(colectionObjectFor.photosColection, 'photosColection');
+//console.log(colectionObjectFor.idColection, 'idColection');
