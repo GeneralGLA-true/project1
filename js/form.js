@@ -11,35 +11,30 @@ comentInput.setAttribute('maxlength', '140');
 function validateHashtags(input) {
   const lowInput = input.toLocaleLowerCase()
   const hashtags = lowInput.split(' ');
-
   const uniqueHashtags = new Set(hashtags);
 
   if (hashtags.length !== uniqueHashtags.size) {
     return 'Один і той же хеш-тег використовується двічі';
-  }
+  };
 
   if (hashtags.length > 5) {
     return 'Не можна вказати більше пяти хеш-тегів';
-  }
+  };
 
   for (const hashtag of hashtags) {
     if (!hashtag.match(hashtagPattern)) {
       return 'Хеш-тег не відповідає вимогам';
-    }
-  }
+    };
+  };
 
-  return 'Всі хеш-теги відповідають вимогам';
-}
-
+  return '';
+};
 
 hashtagInput.addEventListener('input', function () {
   const inputText = hashtagInput.value;
   const isValid = validateHashtags(inputText);
   hashtagInput.setCustomValidity(isValid);
 });
-
-
-
 
 uploadBTN.addEventListener('click', function() {
     form.classList.remove('hidden');
@@ -49,13 +44,6 @@ uploadBTN.addEventListener('click', function() {
 cancelBtn.addEventListener('click', function() {
     form.classList.add('hidden');
     body.classList.remove('modal-open');
-});
-
-document.addEventListener('keydown', e => {
-    if (e.key === 'Escape'){
-      form.classList.add('hidden');
-      body.classList.remove('modal-open');
-    }
 });
 
 hashtagInput.addEventListener('keydown', e => {
