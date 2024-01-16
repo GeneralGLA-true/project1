@@ -10,6 +10,8 @@ const description = bigPicContainer.querySelector('.social__caption');
 const cancelBtn = document.querySelector('#picture-cancel');
 const socialCommentCount = document.querySelector('.social__comment-count');
 
+const form = document.querySelector('.img-upload__overlay');
+
 socialCommentCount.classList.add('hidden');
 
 function getBigPicture (e) {
@@ -51,5 +53,6 @@ document.addEventListener('keydown', e => {
     if (e.key === 'Escape') {
         bigPicContainer.classList.add('hidden');
         body.classList.remove('modal-open');
+        form.classList.add('hidden');
     }
 });
