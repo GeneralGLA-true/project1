@@ -3,7 +3,8 @@ const uploadBTN = document.querySelector('.img-upload__label')
 const cancelBtn = document.querySelector('#upload-cancel');
 const hashtagInput = document.querySelector('.text__hashtags');
 const comentInput = document.querySelector('.text__description');
-const hashtagPattern = /^(?:#([a-zA-Z0-9]{1,19})|\b([a-zA-Z0-9]{1,20}))$/g;
+//const hashtagPattern = /^(?:#([a-zA-Z0-9]{1,19})|\b([a-zA-Z0-9]{1,20}))$/g;
+const hashtagPattern = /^#([a-zA-Z0-9]{1,19})$/g;
 const body = document.querySelector('body');
 
 comentInput.setAttribute('maxlength', '140');
