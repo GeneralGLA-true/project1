@@ -1,6 +1,6 @@
 async function getFetchData (){
   try {
-    const response = await fetch('http://localhost:3000/photos');
+    const response = await fetch('http://localhost:3001/photos');
     if(!response.ok) {
       throw new Error('Some network problem');
     };

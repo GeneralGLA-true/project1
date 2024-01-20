@@ -8,25 +8,52 @@ const comentsContainer = document.querySelector('.social__comments');
 const likesCount = bigPicContainer.querySelector('.likes-count');
 const description = bigPicContainer.querySelector('.social__caption');
 const cancelBtn = document.querySelector('#picture-cancel');
+
 const socialCommentCount = document.querySelector('.social__comment-count');
+const moreCommentBTN = document.querySelector('.social__comments-loader');
+const commentCount = document.querySelector('.comments-count');
+const shownComentsArray = getComments();
+
 
 const form = document.querySelector('.img-upload__overlay');
 
-socialCommentCount.classList.add('hidden');
 
 function getBigPicture (e) {
+
+
     const findID = e.target.dataset.id;
     const dataObject = mockArray.find((e) => findID == e.id);
     const comentsTemplate = dataObject.coments.map((e) => getComentsTemplate(e));
+    const minCommentShown = 5;
+
+
+    console.log(comentsTemplate)
+
+    if (minCommentShown >= dataObject.coments.length) {
+        socialCommentCount.classList.add('hidden');
+        moreCommentBTN.classList.add('hidden');
+    }
+
+    console.log(dataObject);
+
+
+
     
     description.innerText = dataObject.description;
     image.src = dataObject.url;
     likesCount.innerText = dataObject.likes;
-    comentsContainer.innerHTML = comentsTemplate;
+
+
+
+    commentCount.innerText = dataObject.coments.length;
+
+    comentsContainer.innerHTML = shownComentsArray(comentsTemplate); ///// сюда комменты
 
     body.classList.add('modal-open');
     bigPicContainer.classList.remove('hidden');
 };
+
+
 
 function getComentsTemplate (obj){
     return `<li class="social__comment">
@@ -38,6 +65,10 @@ function getComentsTemplate (obj){
   </li>`
 };
 
+
+
+
+
 document.addEventListener('click', e => {
     if (e.target.tagName == "IMG") {
         getBigPicture(e);
@@ -45,14 +76,49 @@ document.addEventListener('click', e => {
 });
 
 cancelBtn.addEventListener('click', e => {
-    bigPicContainer.classList.add('hidden');
-    body.classList.remove('modal-open');
+    modalClosed();
 });
 
 document.addEventListener('keydown', e => {
     if (e.key === 'Escape') {
-        bigPicContainer.classList.add('hidden');
-        body.classList.remove('modal-open');
+        modalClosed();
         form.classList.add('hidden');
-    }
+    };
 });
+
+moreCommentBTN.addEventListener('click', () => {
+    comentsContainer.innerHTML = shownComentsArray();
+});
+
+
+
+
+function modalClosed () {
+    bigPicContainer.classList.add('hidden');
+    body.classList.remove('modal-open');
+    socialCommentCount.classList.remove('hidden');
+    moreCommentBTN.classList.remove('hidden');
+    shownComentsArray('null');
+};
+
+function getComments () {
+    let i = 0;
+    let max = 5;
+    let allComentsArray = [];
+    let comentsTemp = [];
+    return function (array){
+
+        if (arguments.length > 0){
+            allComentsArray = array;
+        }; 
+
+        for (; i < max; i++){
+            if(!allComentsArray[i]){
+                return comentsTemp;
+            }
+            comentsTemp +=allComentsArray[i];
+        };
+        max+=5;
+        return comentsTemp;
+    }
+}
