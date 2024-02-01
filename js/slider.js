@@ -4,7 +4,10 @@ const slider = document.getElementById('slider');
 const imageContainer = document.querySelector('.img-upload__preview');
 const image = imageContainer.querySelector('img');
 const effectsBtn = document.querySelector('.effects__list');
-const effectValue = document.querySelector('.effect-level__value')
+const effectValue = document.querySelector('.effect-level__value');
+
+const scaleControl = document.querySelector('.img-upload__scale');
+
 
 noUiSlider.create(slider, {
     start: 1,
@@ -141,5 +144,34 @@ function effectHeat () {
         effectValue.setAttribute('value', `${slider.noUiSlider.get()}`); 
     })
 }
+
+
+scaleControl.addEventListener('click', (e)=>{
+    const scale = getScaleValue();
+    if(e.target.tagName === 'INPUT') {
+        image.style.transform = 'scale(1)';
+    };
+    if (e.target.tagName === 'BUTTON'){
+        switch (true) {
+            case e.target.className === 'scale__control  scale__control--smaller':
+                image.style.transform = 'scale(.75)';
+                break;
+            case e.target.className === 'scale__control  scale__control--bigger':
+                image.style.transform = 'scale(1.25)';
+                break;
+            default:
+                break;
+        };
+    };
+});
+
+function getScaleValue (){
+    let scale = 1;
+    return function (numb){
+        return scale += numb;
+    }
+}
+
+
 
 //console.log(mockArray)
