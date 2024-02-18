@@ -21,6 +21,12 @@ let scale = getScaleValue();
 
 comentInput.setAttribute('maxlength', '140');
 
+const upLoadFile = document.querySelector('#upload-file');
+const smallImage = document.querySelectorAll('span');
+const submitBtn = document.querySelector('#upload-submit');
+
+
+
 function validateHashtags(input) {
   const lowInput = input.toLocaleLowerCase()
   const hashtags = lowInput.split(' ');
@@ -69,7 +75,7 @@ hashtagInput.addEventListener('keydown', e => {
 
 comentInput.addEventListener('keydown', e => {
     if (e.key === 'Escape') {
-        e.stopPropagation();
+      e.stopPropagation();
     };
 });
 
@@ -243,6 +249,83 @@ function getScaleValue (){
     };
   };
 };
+
+
+
+upLoadFile.addEventListener('change', (e)=>{
+  const sellectedFile = e.target.files[0];
+  const reader= new FileReader();
+  reader.onload = function(evt){
+    const result = evt.target.result
+    image.src = result;
+    smallImage.forEach( e=>{
+      e.style.backgroundImage = `url(${result})`;
+    });
+  };
+  reader.readAsDataURL(sellectedFile);
+})
+
+
+
+
+
+
+
+
+
+const forms = document.getElementById('upload-select-image');
+console.log(forms)
+
+forms.addEventListener('submit', uploadData)
+
+
+
+
+
+
+async function uploadData (e){
+  e.preventDefault();
+  const url = 'http://localhost:3002/new_photo';
+  const formData = new FormData(forms);
+  const myData = Object.fromEntries(formData)
+
+myData.id = mockArray.length+1;
+myData.likes = 0;
+myData.url = image.src;
+
+
+
+console.log(myData, 'console.log')
+const options = {
+  method: "POST",
+  headers: {
+    'Content-Type': 'application/json'
+  },
+  body: JSON.stringify(myData),
+};
+
+
+await fetch(url, options)
+  .then(response => {
+    if (!response.ok) {
+      throw new Error('Network response was not ok');
+    }
+    return response.json();
+  })
+  .then(res => {
+    console.log(res, 'res');
+    form.classList.add('hidden');
+    body.classList.remove('modal-open');
+    image.style.transform = 'scale(1)';
+    alert('Дані надіслано!')
+
+  })
+  .catch(error => {
+    console.error('Виникла помилка при відправці POST-запиту:', error);
+  });
+
+};
+
 
 
 
