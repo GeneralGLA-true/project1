@@ -3,6 +3,7 @@ import {mockArray} from './main.js';
 const template = document.querySelector('#picture');
 const pictureContainer = document.createDocumentFragment();
 const container = document.querySelector('.pictures.container');
+const filterSection = document.querySelector('.img-filters--inactive');
 
 function getPhoto (obj) {
     const cloneTemplate = template.content.cloneNode(true);
@@ -19,7 +20,9 @@ function getPhoto (obj) {
 function getAllPhotos () {
     mockArray.map((e) => {pictureContainer.appendChild(getPhoto(e))});
     container.appendChild(pictureContainer);
+    filterSection.classList.remove('img-filters--inactive');
 }
 
 getAllPhotos()
+
 
