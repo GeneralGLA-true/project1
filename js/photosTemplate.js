@@ -68,14 +68,28 @@ function getRandomPictures (){
     buttonTopComents.classList.remove('img-filters__button--active');  
 }
 
-function getDefault (){
+function getDefault(){
     getAllPhotos();
     buttonRandom.classList.remove('img-filters__button--active');
     buttonDefauLT.classList.add('img-filters__button--active');
     buttonTopComents.classList.remove('img-filters__button--active');
 }
+function debounce(callback, delay = 500){
+    let timeout;
+
+    return () => {
+        clearTimeout(timeout)
+        timeout = setTimeout(() => {
+            callback()
+        }, delay)
+    }
+}
+
+const debounceDefault = debounce(getDefault);
+const debounceRandom = debounce(getRandomPictures)
+const debounceTopTen = debounce(getTopTenComents);
 
 
-buttonDefauLT.addEventListener('click',()=>getDefault());
-buttonTopComents.addEventListener('click',()=>getTopTenComents());
-buttonRandom.addEventListener('click',()=> getRandomPictures());
+buttonDefauLT.addEventListener('click',()=>debounceDefault());
+buttonRandom.addEventListener('click',()=> debounceRandom());
+buttonTopComents.addEventListener('click',()=>debounceTopTen());
